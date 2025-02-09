@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
+from utils import *
 
 # Configuração da página
 st.set_page_config(page_title="Passos Mágicos - Análise", layout="wide")
@@ -43,7 +44,8 @@ elif pagina == "Visão Geral":
     col2.metric("📌 Taxa de Aprovação", "⚠️ Aguardando Dados")
 
     st.subheader("📊 Evolução da Média de Notas")
-    fig = px.line(df, x="Ano", y="INDE", markers=True, title="Notas ao Longo do Tempo")
+    fig = plot_boxplot_comparativo(df, 'INDE')
+    # fig = px.line(df, x="Ano", y="INDE", markers=True, title="Notas ao Longo do Tempo")
     st.plotly_chart(fig)
 
 # PÁGINA 3 - DESEMPENHO EDUCACIONAL
@@ -58,15 +60,15 @@ elif pagina == "Desempenho Educacional":
     st.metric("📌 Média de Notas no Ano", "⚠️ Aguardando Dados")
     
     st.subheader("📊 Distribuição das Notas")
-    fig = px.histogram(df_filtrado, x="nota_final", title="Distribuição das Notas")
+    fig = plot_histograma(df_filtrado, 'INDE', ano)
     st.plotly_chart(fig)
 
 # PÁGINA 4 - PERFIL SOCIOECONÔMICO
 elif pagina == "Perfil Socioeconômico":
     st.title("🏠 Fatores Socioeconômicos e Impacto na Educação")
-
+    
     st.subheader("📊 Distribuição da Renda Familiar")
-    fig = px.histogram(df, x="renda_familiar", title="Distribuição de Renda Familiar dos Alunos")
+    fig = plot_bar_comparison(df, 'INSTITUICAO_ENSINO_ALUNO', 'Ano', 'Instituição de Ensino', xaxis='Instituição')
     st.plotly_chart(fig)
 
 # PÁGINA 5 - CONCLUSÃO E RECOMENDAÇÕES

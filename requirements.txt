@@ -2,3 +2,5 @@ pillow
 streamlit
 plotly_express
 pandas
+scipy
+plotly
