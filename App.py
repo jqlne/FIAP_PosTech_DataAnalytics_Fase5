@@ -13,7 +13,7 @@ data = {
     "aprovado": [None, None, None, None],
     "renda_familiar": [None, None, None, None]
 }
-df = pd.DataFrame(data)
+df = pd.DataFrame('Assets/dados_tratados.csv')
 
 # Barra Lateral para Navegação
 st.sidebar.title("📌 Navegação")
@@ -43,7 +43,7 @@ elif pagina == "Visão Geral":
     col2.metric("📌 Taxa de Aprovação", "⚠️ Aguardando Dados")
 
     st.subheader("📊 Evolução da Média de Notas")
-    fig = px.line(df, x="ano", y="nota_final", markers=True, title="Notas ao Longo do Tempo")
+    fig = px.line(df, x="Ano", y="INDE", markers=True, title="Notas ao Longo do Tempo")
     st.plotly_chart(fig)
 
 # PÁGINA 3 - DESEMPENHO EDUCACIONAL
@@ -51,9 +51,9 @@ elif pagina == "Desempenho Educacional":
     st.title("📚 Análise do Desempenho Educacional")
     
     st.sidebar.subheader("📌 Filtros")
-    ano = st.sidebar.selectbox("Selecione o Ano", df["ano"].unique())
+    ano = st.sidebar.selectbox("Selecione o Ano", df["Ano"].unique())
 
-    df_filtrado = df[df["ano"] == ano]
+    df_filtrado = df[df["Ano"] == ano]
 
     st.metric("📌 Média de Notas no Ano", "⚠️ Aguardando Dados")
     
