@@ -1,0 +1,4 @@
+pillow
+streamlit
+plotly_express
+pandas
