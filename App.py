@@ -13,7 +13,7 @@ data = {
     "aprovado": [None, None, None, None],
     "renda_familiar": [None, None, None, None]
 }
-df = pd.DataFrame('Assets/dados_tratados.csv')
+df = pd.read_csv("Assets/dados_tratados.csv")
 
 # Barra Lateral para Navegação
 st.sidebar.title("📌 Navegação")
