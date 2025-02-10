@@ -3,7 +3,6 @@ import pandas as pd
 import plotly.graph_objs as go
 import plotly.express as px
 import numpy as np
-import matplotlib.pyplot as plt
 
 # Carregar o dataset
 df = pd.read_csv("dados_tratados.csv")
