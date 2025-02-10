@@ -26,44 +26,53 @@ def plot_bar(df, col, titulo, xaxis, yaxis='Qt'):
   return fig
 
 def plot_bar_comparison(df, col1, col2, titulo, xaxis, yaxis='Qt'): # Página 4
+    # Contar ocorrências para col1 e col2
+    grupos = df.groupby([col1, col2]).size().unstack(fill_value=0)
 
-  grupos = df.groupby([col1, col2]).size().unstack(fill_value=0)
-
+    # Criar a figura
     fig = go.Figure()
 
+    # Adicionar uma barra para cada categoria em col2
     for categoria in grupos.columns:
         fig.add_trace(
             go.Bar(
                 x=grupos.index,
                 y=grupos[categoria],
-                name=str(categoria),  
-                text=grupos[categoria], 
-                textposition='auto' 
+                name=str(categoria),  # Nome da legenda
+                text=grupos[categoria],  # Adiciona os valores nas barras
+                textposition='auto'  # Posiciona automaticamente os valores
             )
         )
 
+    # Configuração do layout
     fig.update_layout(
         title=titulo,
         xaxis=dict(title=xaxis, tickmode='linear'),
         yaxis=dict(title=yaxis),
-        barmode='group'  
+        barmode='group'  # Barras lado a lado
     )
 
     return fig
 
 
 def plot_histograma(df, col, titulo, rug=True):
+  # faz o cálculo do KDE com o scipy
   data = df[col].dropna().values
   kde = gaussian_kde(data)
   x_vals = np.linspace(min(data), max(data), 1000)
   kde_vals = kde(x_vals)
 
+  # faz o cálculo da quantidade ótima de bins (assim evitamos agrupamentos desnecessários)
   bins = len(np.histogram_bin_edges(data, bins='auto'))
- 
+
+  # cria os plots separados (histograma + kde + rug)
+  # 1. histograma
   histogram = go.Histogram(x=data, nbinsx=bins, histnorm='probability density', name=f'Density: {col}')
 
-kde_line = go.Scatter(x=x_vals, y=kde_vals, mode='lines', name='Curve (KDE)', line=dict(color='red'))
+  # 2. kde
+  kde_line = go.Scatter(x=x_vals, y=kde_vals, mode='lines', name='Curve (KDE)', line=dict(color='red'))
 
+  # 3. rug, mas apenas se ele tiver sido requisitado
   if rug:
     rug_plot = go.Scatter(
         x=data,
@@ -73,11 +82,13 @@ kde_line = go.Scatter(x=x_vals, y=kde_vals, mode='lines', name='Curve (KDE)', li
         marker=dict(color='black', symbol='line-ns-open', size=10)
     )
 
+  # figura principal
   fig = go.Figure()
   fig.add_trace(histogram)
   fig.add_trace(kde_line)
   fig.update_traces(texttemplate='%{y:.2%}', textposition='outside', selector=dict(type='histogram'))
 
+  # configs
   fig.update_layout(
       title=titulo,
       xaxis_title='Value',
@@ -87,9 +98,11 @@ kde_line = go.Scatter(x=x_vals, y=kde_vals, mode='lines', name='Curve (KDE)', li
       uniformtext_mode='hide'
   )
 
+  # configs com rug
   if rug:
     fig.add_trace(rug_plot)
     fig.update_layout(yaxis=dict(range=[-0.02, max(kde_vals) + 0.1]))
+  # configs sem rug
   else:
     fig.update_layout(xaxis=dict(tickmode='linear'))
 
@@ -123,6 +136,7 @@ def plot_boxplot_comparativo(df, col):
 def plot_evolucao_media_inde(df): # Visão Geral
     df_media_ano = df.groupby("ano")["indice_desenvolvimento_educacional"].mean().reset_index()
 
+    # Garantir que o ano seja tratado como inteiro
     df_media_ano["ano"] = df_media_ano["ano"].astype(int)
 
     fig = px.line(
@@ -134,6 +148,7 @@ def plot_evolucao_media_inde(df): # Visão Geral
         labels={"ano": "Ano", "indice_desenvolvimento_educacional": "Média INDE"}
     )
 
+    # Forçar o eixo X a exibir apenas valores inteiros
     fig.update_xaxes(type="category")
 
     return fig
