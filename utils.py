@@ -4,152 +4,108 @@ import plotly.graph_objs as go
 import plotly.express as px
 from scipy.stats import gaussian_kde
 
-def plot_bar(df, col, titulo, xaxis, yaxis='Qt'):
-  grupos = df[col].value_counts()
 
-  fig = go.Figure(
-      go.Bar(
-          x=grupos.index,
-          y=grupos,
-          text=grupos,
-          textposition='auto'
-      )
-  )
-
-  fig.update_layout(
-      title=titulo,
-      xaxis=dict(tickmode='linear'),
-      xaxis_title=xaxis,
-      yaxis_title=yaxis,
-  )
-
-  return fig
-
-def plot_bar_comparison(df, col1, col2, titulo, xaxis, yaxis='Qt'): # Página 4
-    # Contar ocorrências para col1 e col2
-    grupos = df.groupby([col1, col2]).size().unstack(fill_value=0)
-
-    # Criar a figura
-    fig = go.Figure()
-
-    # Adicionar uma barra para cada categoria em col2
-    for categoria in grupos.columns:
-        fig.add_trace(
-            go.Bar(
-                x=grupos.index,
-                y=grupos[categoria],
-                name=str(categoria),  # Nome da legenda
-                text=grupos[categoria],  # Adiciona os valores nas barras
-                textposition='auto'  # Posiciona automaticamente os valores
-            )
-        )
-
-    # Configuração do layout
+# Função para plotar gráfico de linha
+def plot_line(df, x, y, titulo, xaxis, yaxis):
+    fig = go.Figure(go.Scatter(x=df[x], y=df[y], mode='lines', name=titulo))
     fig.update_layout(
         title=titulo,
-        xaxis=dict(title=xaxis, tickmode='linear'),
-        yaxis=dict(title=yaxis),
-        barmode='group'  # Barras lado a lado
+        xaxis_title=xaxis,
+        yaxis_title=yaxis
     )
-
     return fig
 
-
-def plot_histograma(df, col, titulo, rug=True):
-  # faz o cálculo do KDE com o scipy
-  data = df[col].dropna().values
-  kde = gaussian_kde(data)
-  x_vals = np.linspace(min(data), max(data), 1000)
-  kde_vals = kde(x_vals)
-
-  # faz o cálculo da quantidade ótima de bins (assim evitamos agrupamentos desnecessários)
-  bins = len(np.histogram_bin_edges(data, bins='auto'))
-
-  # cria os plots separados (histograma + kde + rug)
-  # 1. histograma
-  histogram = go.Histogram(x=data, nbinsx=bins, histnorm='probability density', name=f'Density: {col}')
-
-  # 2. kde
-  kde_line = go.Scatter(x=x_vals, y=kde_vals, mode='lines', name='Curve (KDE)', line=dict(color='red'))
-
-  # 3. rug, mas apenas se ele tiver sido requisitado
-  if rug:
-    rug_plot = go.Scatter(
-        x=data,
-        y=[-0.01] * len(data),
-        mode='markers',
-        name='Obs',
-        marker=dict(color='black', symbol='line-ns-open', size=10)
+# Função para gráfico de dispersão
+def plot_scatter(df, col1, col2, titulo, xaxis, yaxis):
+    fig = go.Figure(go.Scatter(
+        x=df[col1], y=df[col2], mode='markers', marker=dict(color=df["ano"]),
+        text=df["ano"], name=titulo
+    ))
+    fig.update_layout(
+        title=titulo,
+        xaxis_title=xaxis,
+        yaxis_title=yaxis
     )
+    return fig
 
-  # figura principal
-  fig = go.Figure()
-  fig.add_trace(histogram)
-  fig.add_trace(kde_line)
-  fig.update_traces(texttemplate='%{y:.2%}', textposition='outside', selector=dict(type='histogram'))
+# Função para plotar gráfico de barras
+def plot_bar(df, col, titulo, xaxis, yaxis='Número de alunos'):
+    grupos = df[col].value_counts()
+    fig = go.Figure(go.Bar(
+        x=grupos.index, y=grupos, text=grupos, textposition='auto'
+    ))
+    fig.update_layout(
+        title=titulo,
+        xaxis=dict(tickmode='linear'),
+        xaxis_title=xaxis,
+        yaxis_title=yaxis
+    )
+    return fig
 
-  # configs
-  fig.update_layout(
-      title=titulo,
-      xaxis_title='Value',
-      yaxis_title='Frequency',
-      yaxis=dict(range=[0, max(kde_vals) + 0.1]),
-      bargap=0.015,
-      uniformtext_mode='hide'
-  )
+# Função para gráfico de radar
+def plot_radar(df, categories, values, titulo):
+    fig = go.Figure(data=go.Scatterpolar(r=values, theta=categories, fill='toself'))
+    fig.update_layout(
+        title=titulo,
+        polar=dict(radialaxis=dict(visible=True, range=[0, 1]))
+    )
+    return fig
 
-  # configs com rug
-  if rug:
-    fig.add_trace(rug_plot)
-    fig.update_layout(yaxis=dict(range=[-0.02, max(kde_vals) + 0.1]))
-  # configs sem rug
-  else:
-    fig.update_layout(xaxis=dict(tickmode='linear'))
+# Função para gráfico de barras empilhadas interativo
+def plot_bar_stacked(df, col, titulo, xaxis):
+    grupos = df.groupby([col]).size().reset_index(name="Número de alunos")
+    fig = go.Figure(go.Bar(
+        x=grupos[col], y=grupos['Número de alunos'], text=grupos['Número de alunos'], textposition='auto', barmode='stack'
+    ))
+    fig.update_layout(
+        title=titulo,
+        xaxis_title=xaxis
+    )
+    return fig
 
-  return fig
-  
+# Função para gráfico de heatmap
+def plot_heatmap(df, cols, titulo):
+    corr = df[cols].corr()
+    fig = go.Figure(go.Heatmap(z=corr.values, x=corr.columns, y=corr.columns, colorscale="Viridis"))
+    fig.update_layout(
+        title=titulo,
+        xaxis_title='Variáveis',
+        yaxis_title='Variáveis'
+    )
+    return fig
 
+# Função para plotar boxplot
 def plot_boxplot(df, col, titulo):
-  fig = px.box(y=df[col], points="all", title=titulo)
-
-  fig.update_layout(
-      yaxis_title='Valor'
-  )
-
-  fig.update_yaxes(dtick=1)
-
-  return fig
-     
-
-
-def plot_boxplot_comparativo(df, col):
-  fig = px.box(data_frame=df, x='ano', y=col, points="all", title=f'Distribuição do {col} comparativa', color='ano')
-
-  fig.update_layout(
-      yaxis_title='Valor'
-  )
-
-  fig.update_yaxes(dtick=1)
-
-  return fig
-
-def plot_evolucao_media_inde(df): # Visão Geral
-    df_media_ano = df.groupby("ano")["indice_desenvolvimento_educacional"].mean().reset_index()
-
-    # Garantir que o ano seja tratado como inteiro
-    df_media_ano["ano"] = df_media_ano["ano"].astype(int)
-
-    fig = px.line(
-        df_media_ano, 
-        x="ano", 
-        y="indice_desenvolvimento_educacional", 
-        markers=True,
-        title="📈 Evolução da Média INDE ao Longo dos Anos",
-        labels={"ano": "Ano", "indice_desenvolvimento_educacional": "Média INDE"}
+    fig = go.Figure(go.Box(
+        y=df[col], boxmean='sd', name=titulo, marker=dict(color='blue')
+    ))
+    fig.update_layout(
+        title=titulo,
+        yaxis_title='Valor'
     )
-
-    # Forçar o eixo X a exibir apenas valores inteiros
-    fig.update_xaxes(type="category")
-
     return fig
 
+
+    #import plotly.graph_objects as go
+
+def plot_bar_stacked(df, col, title, yaxis_label):
+    # Contar a quantidade de alunos por recomendação de equipe
+    grupos = df.groupby([col]).size().reset_index(name='Número de alunos')
+
+    # Criar a figura com as barras empilhadas
+    fig = go.Figure(go.Bar(
+        x=grupos[col],
+        y=grupos['Número de alunos'],
+        text=grupos['Número de alunos'],
+        textposition='auto'
+    ))
+    
+    # Atualizar o layout com o barmode
+    fig.update_layout(
+        title=title,
+        xaxis_title=col,
+        yaxis_title=yaxis_label,
+        barmode='stack',  # Definindo o barmode no layout
+    )
+    
+    return fig
