@@ -9,8 +9,11 @@ from utils import *
 # Carregar o dataset
 df = pd.read_csv("dados_tratados.csv")
 
+st.set_page_config(layout="wide")
 # Barra Lateral para Navegação
+
 st.sidebar.title("📌 Navegação")
+
 pagina = st.sidebar.radio("Ir para:", [
     "Página Inicial", "Visão Geral", "Desempenho Educacional", "Perfil Socioeconômico", "Conclusão e Recomendações"
 ])
@@ -40,14 +43,30 @@ elif pagina == "Visão Geral":
 
     # 1. Distribuição do Índice de Desenvolvimento Educacional ao longo dos anos
     st.subheader("📈 Evolução do Índice de Desenvolvimento Educacional ao Longo dos Anos")
-    fig_line_ide = plot_line(df, "ano", "indice_desenvolvimento_educacional", "Evolução do INDE", "Ano", "INDE")
+    fig_line_ide = plot_boxplot_comparativo(df, 'indice_desenvolvimento_educacional', 'ano', "Evolução do INDE", "INDE", "Ano")
     st.plotly_chart(fig_line_ide)
 
     st.write("""A análise do INDE ao longo dos anos mostra a evolução do desempenho educacional dos alunos atendidos pela ONG. Se a tendência for de aumento, isso sugere que as intervenções da ONG estão sendo eficazes em melhorar o desenvolvimento educacional dos alunos ao longo do tempo. Uma queda no INDE em algum ano pode indicar a necessidade de revisão nas estratégias pedagógicas ou apoio adicional para os alunos em determinados períodos.""")
     st.write("")
     st.subheader("📊 Comparação do Índice de Desenvolvimento Educacional por Ano")
-    fig_bar_ide = plot_bar(df, "ano", "Distribuição do INDE por Ano", "Ano")
-    st.plotly_chart(fig_bar_ide)
+    
+    import plotly.figure_factory as ff
+    import numpy as np
+
+    x1=df.query('ano == 2020')['indice_desenvolvimento_educacional'].dropna()
+    x2=df.query('ano == 2021')['indice_desenvolvimento_educacional'].dropna()
+    x3=df.query('ano == 2022')['indice_desenvolvimento_educacional'].dropna()
+
+    # Group data together
+    hist_data = [x1, x2, x3]
+
+    group_labels = ['2020', '2021', '2022']
+
+    # Create distplot with custom bin_size
+    fig = ff.create_distplot(hist_data, group_labels, bin_size=.2)
+
+    #fig_bar_ide = plot_bar(df, "ano", "Distribuição do INDE por Ano", "Ano")
+    st.plotly_chart(fig)
 
     st.write("""Esse gráfico revela como os alunos estão distribuídos entre diferentes faixas do INDE ao longo dos anos. Se a maior parte dos alunos se encontra na faixa mais baixa do INDE, pode ser necessário intensificar as ações de apoio para aumentar a performance educacional. Por outro lado, uma maior concentração de alunos em faixas mais altas do INDE indica um bom desempenho geral e pode ser um reflexo da eficácia dos programas da ONG.""")
 
@@ -65,21 +84,58 @@ elif pagina == "Desempenho Educacional":
 
     st.write("""Este gráfico pode mostrar uma correlação entre os níveis de engajamento e as notas de aprendizagem. Se houver uma forte correlação positiva, isso indica que os alunos mais engajados estão alcançando melhores resultados acadêmicos. Este insight pode reforçar a importância de estratégias para aumentar o engajamento dos alunos, especialmente nas fases iniciais ou com alunos em maior risco de defasagem escolar.""")
     st.write("")
-    st.subheader("📊 Variação do Engajamento por Fase")
-    fig_box_engajamento = plot_boxplot(df, "indicador_de_engajamento_2", "Variação do Engajamento por Fase")
-    st.plotly_chart(fig_box_engajamento)
+    
 
+    st.subheader("📊 Variação do Engajamento por Fase")
+    fig_box_engajamento = plot_boxplot_comparativo(df, "indicador_de_engajamento.1", "fase", "Variação do Engajamento por Fase", "IEG", "Fase")
+    st.plotly_chart(fig_box_engajamento)
     st.write("""O boxplot de engajamento por fase ajuda a identificar em quais fases os alunos apresentam maior variação de engajamento. Se o engajamento for muito variável nas fases iniciais, isso sugere que intervenções específicas para essas fases podem ser necessárias. Uma menor variação nas fases mais avançadas pode indicar um engajamento mais consistente, mas também pode ser um sinal de saturação ou necessidade de diversificação de métodos pedagógicos.""")
     st.write("")
-    # 3. Impacto das Recomendações de Equipe
-    st.subheader("📊 Impacto das Recomendações de Equipe")
     
-    fig_bar_stacked_recomendacoes = plot_bar_stacked(df, "recomendacao_equipe_1", "Impacto das Recomendações de Equipe no Desempenho", "Número de Alunos")
-    st.plotly_chart(fig_bar_stacked_recomendacoes)
+    
+    st.subheader("📊 Impacto das Recomendações de Equipe")
+
+    eval_col2021=['recomendacao_equipe_1','recomendacao_equipe_2','recomendacao_equipe_3','recomendacao_equipe_4']
+    eval_col2022= ['recomendacao_avaliativa_1','recomendacao_avaliativa_2','recomendacao_avaliativa_3','recomendacao_avaliativa_4']
+    
+    fig_box_engajamento = plot_categorical_comparison(df, eval_col2021, eval_col2022, "2021", "2022")
+    st.plotly_chart(fig_box_engajamento)
+
+    st.write("""Este gráfico compara a distribuição das avaliações dos alunos por avaliador nos anos de 2021 e 2022, destacando mudanças significativas na progressão dos estudantes no programa da ONG Passos Mágicos.""")
+    st.write('''Principais Insights
+             
+1- Aumento nas avaliações em 2022
+
+O número total de avaliações aumentou em 2022, indicando um possível crescimento no número de alunos ou mudanças na metodologia de avaliação.
+
+2- Diminuição dos "Não Avaliados"
+
+No ano de 2021, o Avaliador 4 teve um alto número de alunos não avaliados (barra vermelha).
+Em 2022, essa categoria praticamente desaparece, sugerindo uma melhora no processo de avaliação.
+
+3- Mais alunos mantidos na fase atual
+
+A cor verde-claro ("Mantido na Fase atual") aumentou significativamente para todos os avaliadores, especialmente em 2022.
+Isso pode indicar que os critérios para promoção ficaram mais rigorosos, ou que os alunos estão apresentando um desempenho mais estável.
+
+4- Avaliador 1 e Avaliador 2 promoveram mais alunos
+
+O número de alunos promovidos de fase (barra azul) cresceu nos dois anos, principalmente para os Avaliadores 1 e 2.
+Isso pode indicar que os alunos sob a supervisão desses avaliadores tiveram melhor desempenho ou que houve mudanças no critério de avaliação.''')
+    
+    
+#     # 3. Impacto das Recomendações de Equipe
+#     st.subheader("📊 Impacto das Recomendações de Equipe")
+    
+#     fig_bar_stacked_recomendacoes = plot_bar_comparison(df, 'recomendacao_equipe_1', 'ano', 'Impacto das Recomendações de Equipe no Desempenho', xaxis='Número de Alunos')
+# #plot_bar_stacked(df, "recomendacao_equipe_1", "Impacto das Recomendações de Equipe no Desempenho",'Recomendação Equipe',  "Número de Alunos")
+#     st.plotly_chart(fig_bar_stacked_recomendacoes)
 
 
-    st.write("""O gráfico empilhado mostra o impacto das recomendações feitas pela equipe pedagógica. Se as recomendações de maior impacto forem relacionadas a áreas como apoio emocional, estratégias de ensino individualizado, ou programas de reforço, isso indica quais intervenções têm sido mais eficazes. A comparação de diferentes tipos de recomendações pode ajudar a ONG a identificar as melhores práticas para implementar de forma mais ampla.""")
-    st.write("")
+    # st.write("""O gráfico empilhado mostra o impacto das recomendações feitas pela equipe pedagógica. Se as recomendações de maior impacto forem relacionadas a áreas como apoio emocional, estratégias de ensino individualizado, ou programas de reforço, isso indica quais intervenções têm sido mais eficazes. A comparação de diferentes tipos de recomendações pode ajudar a ONG a identificar as melhores práticas para implementar de forma mais ampla.""")
+    # st.write("")
+    
+    
     # 4. Evolução do Desempenho dos Alunos
     st.subheader("📊 Evolução das Notas dos Alunos em Português, Matemática e Ingresso")
     fig_line_notas = plot_line(df, "ano", "nota_port", "Evolução das Notas de Português", "Ano", "Nota")
@@ -95,12 +151,11 @@ elif pagina == "Desempenho Educacional":
     st.write("")
     # 5. Análise de Defasagem Escolar
     st.subheader("📊 Defasagem Escolar por Fase")
-    fig_bar_defasagem = plot_bar(df, "fase", "Defasagem Escolar por Fase", "Fase")
+    fig_bar_defasagem = plot_bar(df, "fase", "Numero de Alunos por Fase", "Fase")
     st.plotly_chart(fig_bar_defasagem)
 
     st.write("""A análise da defasagem escolar pode revelar em que fases os alunos estão mais atrasados. Por exemplo, se a defasagem for maior nas fases iniciais, isso sugere que o apoio deve ser direcionado especialmente para as crianças mais novas. Se a defasagem for maior nas fases mais avançadas, pode ser um indicativo de que os alunos estão tendo dificuldades para acompanhar o ritmo, o que exigiria intervenções urgentes.""")
     st.write("")
-    st.subheader("📊 Defasagem Escolar vs INDE")
     fig_scatter_defasagem = plot_scatter(df, "defasagem", "indice_desenvolvimento_educacional", "Defasagem vs INDE", "Defasagem (anos)", "INDE")
     st.plotly_chart(fig_scatter_defasagem)
 
@@ -172,14 +227,44 @@ elif pagina == "Perfil Socioeconômico":
 
     # 7. Análise de Recomendação de Bolsa
     st.subheader("📊 Classificação Geral de Bolsistas vs Não Bolsistas")
-    fig_bar_bolsista = plot_bar(df, "bolsista", "Classificação Geral - Bolsistas vs Não Bolsistas", "Bolsista")
+    fig_bar_bolsista = plot_bar_comparison(df, 'ano', 'bolsista', 'Classificação Geral - Bolsistas vs Não Bolsistas', xaxis='Bolsista')
+#plot_bar(df, "bolsista", "Classificação Geral - Bolsistas vs Não Bolsistas", "Bolsista")
     st.plotly_chart(fig_bar_bolsista)
 
     st.write("""A comparação entre bolsistas e não bolsistas pode revelar um impacto positivo do apoio financeiro no desempenho educacional. Se os bolsistas tiverem um desempenho superior, isso sugere que a oferta de bolsas tem um papel importante no sucesso acadêmico dos alunos. Este dado pode apoiar a continuidade e expansão de programas de bolsas, que ajudam a reduzir desigualdades e melhorar os resultados educacionais.""")
     st.write("")
     st.subheader("📊 Bolsistas vs Não Bolsistas nas Notas")
-    fig_scatter_bolsista = plot_scatter(df, "bolsista", "nota_port", "Bolsistas vs Não Bolsistas", "Bolsista", "Nota de Português")
-    st.plotly_chart(fig_scatter_bolsista)
+    
+    
+    fig = go.Figure()
+    fig.add_trace(go.Histogram(
+        x=df.query('bolsista == "Sim"')['indice_desenvolvimento_educacional'],
+        histnorm='percent',
+        name='Bolsista', # name used in legend and hover labels
+        marker_color='#EB89B5',
+        opacity=0.75
+    ))
+    fig.add_trace(go.Histogram(
+        x=df.query('bolsista == "Não"')['indice_desenvolvimento_educacional'],
+        histnorm='percent',
+        name='Não-Bolsista',
+        marker_color='#330C73',
+        opacity=0.75
+    ))
+
+    fig.update_layout(
+        title_text='Percentual de notas separado Bolsista e Não-Bolsista', # title of plot
+        xaxis_title_text='Nota', # xaxis label
+        yaxis_title_text='Porcentagem', # yaxis label
+        bargap=0.2, # gap between bars of adjacent location coordinates
+        bargroupgap=0.1 # gap between bars of the same location coordinates
+    )
+
+    st.plotly_chart(fig)
+    
+    ##fig_scatter_bolsista = plot_hist(df,  "indice_desenvolvimento_educacional","bolsista")
+    # fig_scatter_bolsista = plot_boxplot_comparativo(df,  "indice_desenvolvimento_educacional","bolsista", "Bolsistas vs Não Bolsistas", "INDE", "Bolsista")
+    #st.plotly_chart(fig_scatter_bolsista)
 
     
 
@@ -187,8 +272,9 @@ elif pagina == "Perfil Socioeconômico":
     st.write("")
     # 8. Impacto da Integração com os Princípios Passos Mágicos
     st.subheader("📊 Integração com os Princípios Passos Mágicos")
-    df['integracao_passos_magicos'] = df['indicador_de_engajamento']  # ou qualquer outra lógica que você tenha
-    fig_bar_integracao = plot_bar(df, "integracao_passos_magicos", "Integração com os Princípios Passos Mágicos", "Integração")
+    indicadores = ['indicador_de_engajamento.1', 'indicador_de_aprendizagem.1', 'indicador_de_ponto_de_virada.1']
+    #fig_bar_integracao = plot_hist(df, 'indicador_de_engajamento.1', 'indicador_de_aprendizagem.1')# "Integração com os Princípios Passos Mágicos", "Integração")
+    fig_bar_integracao = plot_boxplot_por_ano(df, indicadores,box_gap=0.1)# "Integração com os Princípios Passos Mágicos", "Integração")
     st.plotly_chart(fig_bar_integracao)
 
     st.write("""Este gráfico examina como os alunos estão se integrando aos princípios e valores da ONG Passos Mágicos e o impacto dessa integração no desempenho. Se alunos com maior integração obtiverem melhores resultados acadêmicos, isso indica que os princípios da ONG têm um efeito positivo no desenvolvimento educacional e no engajamento dos alunos, reforçando a necessidade de continuar promovendo essas práticas.""")
