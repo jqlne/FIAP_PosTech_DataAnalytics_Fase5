@@ -50,8 +50,14 @@ elif pagina == "Visão Geral":
     st.subheader("📈 Evolução do Índice de Desenvolvimento Educacional ao Longo dos Anos")
     fig_line_ide = plot_boxplot_comparativo(df, 'indice_desenvolvimento_educacional', 'ano', "Evolução do INDE", "INDE", "Ano")
     st.plotly_chart(fig_line_ide)
+    st.write("Evolução do Índice de Desenvolvimento Educacional (INDE) ao longo dos anos de 2020, 2021 e 2022, utilizando boxplots para ilustrar a distribuição dos dados de cada ano.")
 
-    st.write("""A análise do INDE ao longo dos anos mostra a evolução do desempenho educacional dos alunos atendidos pela ONG. Se a tendência for de aumento, isso sugere que as intervenções da ONG estão sendo eficazes em melhorar o desenvolvimento educacional dos alunos ao longo do tempo. Uma queda no INDE em algum ano pode indicar a necessidade de revisão nas estratégias pedagógicas ou apoio adicional para os alunos em determinados períodos.""")
+    st.write("- Cada boxplot representa a dispersão dos valores do INDE, destacando a mediana, os quartis e os valores extremos. Os pontos espalhados ao redor indicam a distribuição individual dos dados.")
+    st.write("- Se a mediana e a distribuição do INDE aumentarem ao longo do tempo, isso sugere uma melhoria no desempenho educacional.")
+    st.write("- Caso haja quedas ou oscilações, isso pode indicar desafios a serem abordados.")
+    st.write("- Esse tipo de análise permite que a ONG avalie a eficácia de suas intervenções e tome decisões informadas para melhorar o aprendizado e o desenvolvimento dos alunos.")
+
+
     st.write("")
     st.subheader("📊 Comparação do Índice de Desenvolvimento Educacional por Ano")
     
@@ -73,7 +79,11 @@ elif pagina == "Visão Geral":
     #fig_bar_ide = plot_bar(df, "ano", "Distribuição do INDE por Ano", "Ano")
     st.plotly_chart(fig)
 
-    st.write("""Esse gráfico revela como os alunos estão distribuídos entre diferentes faixas do INDE ao longo dos anos. Se a maior parte dos alunos se encontra na faixa mais baixa do INDE, pode ser necessário intensificar as ações de apoio para aumentar a performance educacional. Por outro lado, uma maior concentração de alunos em faixas mais altas do INDE indica um bom desempenho geral e pode ser um reflexo da eficácia dos programas da ONG.""")
+    st.write("""Distribuição do Índice de Desenvolvimento Educacional (INDE) ao longo dos anos de 2020, 2021 e 2022, permitindo uma análise comparativa do desempenho educacional dos alunos atendidos pela ONG.""")
+    st.write("- As cores representam os diferentes anos: azul para 2020, laranja para 2021 e verde para 2022. A área preenchida e as linhas suavizadas ajudam a visualizar a densidade dos dados.")
+    st.write("- Os pontos na parte inferior dos gráficos indicam a distribuição individual dos alunos, permitindo identificar tendências e padrões ao longo do tempo.")
+    st.write("- Se a maioria dos alunos se concentra nas faixas mais baixas do INDE, isso sugere a necessidade de reforço nas ações de apoio educacional.")
+    st.write("- Por outro lado, uma concentração nas faixas mais altas do INDE ao longo dos anos indica uma melhoria no desempenho geral, possivelmente refletindo a eficácia das iniciativas da ONG.")
 
 # 📚 Página 3 - Desempenho Educacional
 elif pagina == "Desempenho Educacional":
