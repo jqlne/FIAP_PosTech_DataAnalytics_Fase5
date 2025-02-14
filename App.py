@@ -29,19 +29,18 @@ if pagina == "Página Inicial":
     st.title("🌟 Passos Mágicos - Impacto na Educação")
     st.image("Passos-magicos-icon-cor.png")
     st.write("""
-    A ONG Passos Mágicos tem como missão transformar a vida de crianças e jovens em situação de vulnerabilidade social por meio da educação. 
-    Este relatório visa analisar o impacto da organização no desempenho educacional dos alunos atendidos, com base em dados coletados durante os anos de 2020, 2021 e 2022.
+    Este relatório apresenta uma análise detalhada do impacto das ações da ONG Passos Mágicos no desempenho acadêmico dos estudantes atendidos entre os anos de 2020 e 2022. Por meio de um estudo baseado em dados, são avaliados os principais indicadores educacionais e socioeconômicos, permitindo uma compreensão objetiva da eficácia dos programas implementados.
     """)
-    st.write("""A análise de dados educacionais é um passo fundamental para compreender como as intervenções de uma organização impactam o desempenho acadêmico dos estudantes. O objetivo deste estudo é avaliar a eficácia das ações da ONG "Passos Mágicos" no desempenho dos alunos ao longo de três anos consecutivos (2020-2022), fornecendo insights detalhados sobre a melhoria das condições educacionais dos jovens atendidos.
-    A ONG “Passos Mágicos” utiliza a educação como ferramenta de transformação social, com foco em crianças e jovens em situação de vulnerabilidade social. Para medir o impacto de suas ações, foi analisado o desempenho acadêmico dos alunos atendidos, comparando as mudanças nas notas ao longo do período de 2020 a 2022, correlacionando-as com as ações realizadas, como programas de reforço escolar, acompanhamento pedagógico e projetos de apoio social.
-    Este relatório oferece uma visão detalhada das tendências observadas, os fatores que contribuem para o desempenho acadêmico e as recomendações para otimizar os programas educacionais da ONG com base nos dados.
+    st.write("""A Passos Mágicos tem como missão utilizar a educação como ferramenta para a transformação social, atuando junto a crianças e jovens em situação de vulnerabilidade. Para mensurar o impacto de suas iniciativas, foram analisados dados históricos do desempenho acadêmico dos alunos, correlacionando-os com as estratégias pedagógicas adotadas, como reforço escolar, acompanhamento psicopedagógico e projetos de apoio social.
+    """)
+    st.write("""A partir da construção de um dashboard interativo, este estudo visa fornecer insights estratégicos, permitindo uma análise aprofundada dos resultados alcançados e auxiliando na tomada de decisões para a otimização das ações da ONG.
     """)
     st.write("")
-    st.subheader("📊 O que você encontrará neste dashboard?")
-    st.write("- **Visão Geral dos Indicadores:** Uma visão ampla sobre o desempenho educacional dos alunos atendidos pela ONG.")
-    st.write("- **Análise de Desempenho Educacional:** Uma análise detalhada do desempenho acadêmico dos alunos ao longo do tempo.")
-    st.write("- **Perfil Socioeconômico:** Uma investigação sobre como fatores socioeconômicos influenciam o desempenho educacional.")
-    st.write("- **Conclusões e Recomendações:** Baseadas nos dados obtidos.")
+    st.subheader("Estrutura do Relatório")
+    st.write("- **Visão Geral dos Indicadores:** Análise quantitativa do desempenho educacional dos alunos atendidos.")
+    st.write("- **Análise de Desempenho Educacional:** Avaliação da evolução acadêmica ao longo do período estudado.")
+    st.write("- **Perfil Socioeconômico:** Investigação dos fatores socioeconômicos e sua relação com o desempenho escolar.")
+    st.write("- **Conclusões e Recomendações:** Síntese dos achados e diretrizes para aprimoramento das iniciativas educacionais.")
 
 # 📊 Página 2 - Visão Geral
 elif pagina == "Visão Geral":
