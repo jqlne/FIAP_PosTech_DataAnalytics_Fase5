@@ -92,19 +92,13 @@ elif pagina == "Desempenho Educacional":
     # Renomear a segunda ocorrência de 'indicador_de_engajamento' para 'indicador_de_engajamento_2'
     df.rename(columns={'indicador_de_engajamento': 'indicador_de_engajamento_2'}, inplace=True)
 
-    # 2. Análise de Engajamento e Aprendizagem
-    st.subheader("📊 Relacionamento entre Engajamento e Aprendizagem")
-    fig_scatter_engajamento = plot_scatter(df, "indicador_de_engajamento_2", "indicador_de_aprendizagem", "Engajamento vs Aprendizagem", "Engajamento", "Aprendizagem")
-    st.plotly_chart(fig_scatter_engajamento)
-
-    st.write("""Este gráfico pode mostrar uma correlação entre os níveis de engajamento e as notas de aprendizagem. Se houver uma forte correlação positiva, isso indica que os alunos mais engajados estão alcançando melhores resultados acadêmicos. Este insight pode reforçar a importância de estratégias para aumentar o engajamento dos alunos, especialmente nas fases iniciais ou com alunos em maior risco de defasagem escolar.""")
-    st.write("")
-    
-
     st.subheader("📊 Variação do Engajamento por Fase")
     fig_box_engajamento = plot_boxplot_comparativo(df, "indicador_de_engajamento.1", "fase", "Variação do Engajamento por Fase", "IEG", "Fase")
     st.plotly_chart(fig_box_engajamento)
-    st.write("""O boxplot de engajamento por fase ajuda a identificar em quais fases os alunos apresentam maior variação de engajamento. Se o engajamento for muito variável nas fases iniciais, isso sugere que intervenções específicas para essas fases podem ser necessárias. Uma menor variação nas fases mais avançadas pode indicar um engajamento mais consistente, mas também pode ser um sinal de saturação ou necessidade de diversificação de métodos pedagógicos.""")
+    st.write("""Variação do engajamento dos alunos ao longo das diferentes fases, permitindo uma análise comparativa do comportamento de engajamento nas fases iniciais e avançadas.""")
+    st.write("- As variações no engajamento são representadas por boxplots, que ajudam a visualizar a distribuição dos dados. A densidade de engajamento nas diferentes fases pode ser observada, destacando as faixas de maior e menor variação.")
+    st.write("- Se o engajamento for muito variável nas fases iniciais, isso sugere que intervenções específicas podem ser necessárias para melhorar a estabilidade do engajamento dos alunos. Por outro lado, uma menor variação nas fases avançadas pode indicar um engajamento mais consistente, mas também pode ser um sinal de saturação ou necessidade de diversificação de métodos pedagógicos.")
+    st.write("- Essa análise permite identificar as fases que exigem mais suporte e aquelas que apresentam maior estabilidade no engajamento dos alunos, ajudando na adaptação de estratégias pedagógicas.")
     st.write("")
     
     
@@ -116,39 +110,11 @@ elif pagina == "Desempenho Educacional":
     fig_box_engajamento = plot_categorical_comparison(df, eval_col2021, eval_col2022, "2021", "2022")
     st.plotly_chart(fig_box_engajamento)
 
-    st.write("""Este gráfico compara a distribuição das avaliações dos alunos por avaliador nos anos de 2021 e 2022, destacando mudanças significativas na progressão dos estudantes no programa da ONG Passos Mágicos.""")
-    st.write('''Principais Insights
-             
-1- Aumento nas avaliações em 2022
-
-O número total de avaliações aumentou em 2022, indicando um possível crescimento no número de alunos ou mudanças na metodologia de avaliação.
-
-2- Diminuição dos "Não Avaliados"
-
-No ano de 2021, o Avaliador 4 teve um alto número de alunos não avaliados (barra vermelha).
-Em 2022, essa categoria praticamente desaparece, sugerindo uma melhora no processo de avaliação.
-
-3- Mais alunos mantidos na fase atual
-
-A cor verde-claro ("Mantido na Fase atual") aumentou significativamente para todos os avaliadores, especialmente em 2022.
-Isso pode indicar que os critérios para promoção ficaram mais rigorosos, ou que os alunos estão apresentando um desempenho mais estável.
-
-4- Avaliador 1 e Avaliador 2 promoveram mais alunos
-
-O número de alunos promovidos de fase (barra azul) cresceu nos dois anos, principalmente para os Avaliadores 1 e 2.
-Isso pode indicar que os alunos sob a supervisão desses avaliadores tiveram melhor desempenho ou que houve mudanças no critério de avaliação.''')
-    
-    
-#     # 3. Impacto das Recomendações de Equipe
-#     st.subheader("📊 Impacto das Recomendações de Equipe")
-    
-#     fig_bar_stacked_recomendacoes = plot_bar_comparison(df, 'recomendacao_equipe_1', 'ano', 'Impacto das Recomendações de Equipe no Desempenho', xaxis='Número de Alunos')
-# #plot_bar_stacked(df, "recomendacao_equipe_1", "Impacto das Recomendações de Equipe no Desempenho",'Recomendação Equipe',  "Número de Alunos")
-#     st.plotly_chart(fig_bar_stacked_recomendacoes)
-
-
-    # st.write("""O gráfico empilhado mostra o impacto das recomendações feitas pela equipe pedagógica. Se as recomendações de maior impacto forem relacionadas a áreas como apoio emocional, estratégias de ensino individualizado, ou programas de reforço, isso indica quais intervenções têm sido mais eficazes. A comparação de diferentes tipos de recomendações pode ajudar a ONG a identificar as melhores práticas para implementar de forma mais ampla.""")
-    # st.write("")
+    st.write("""Distribuição das avaliações dos alunos por avaliador nos anos de 2021 e 2022, destacando mudanças significativas na progressão dos estudantes no programa da ONG Passos Mágicos.""")
+    st.write("- As barras representam as diferentes categorias de avaliação para cada avaliador, permitindo uma comparação entre os anos e identificando tendências nas avaliações de 2021 e 2022.")
+    st.write("- Se o total de avaliações aumentou em 2022, isso sugere um crescimento no número de alunos ou mudanças na metodologia de avaliação. Em 2021, o Avaliador 4 teve um grande número de alunos não avaliados (barra vermelha), mas essa categoria praticamente desaparece em 2022, indicando uma possível melhoria no processo de avaliação.")
+    st.write('- A cor verde-claro ("Mantido na Fase Atual") aumentou significativamente em 2022 para todos os avaliadores. Isso pode sugerir critérios mais rigorosos para promoção ou um desempenho mais estável dos alunos. Além disso, o número de alunos promovidos de fase (barra azul) cresceu nos últimos dois anos, principalmente para os avaliadores 1 e 2, o que pode indicar um melhor desempenho dos alunos sob a supervisão desses avaliadores ou mudanças nos critérios de avaliação.')
+    st.write("")
     
     
     # 4. Evolução do Desempenho dos Alunos
@@ -162,26 +128,47 @@ Isso pode indicar que os alunos sob a supervisão desses avaliadores tiveram mel
     fig_line_notas = plot_grouped_bar(df, "fase", ["nota_port", "nota_mat", "nota_ing"], subject_names)
     st.plotly_chart(fig_line_notas)
 
-    st.write("""Se as notas estão crescendo ao longo do tempo em matérias chave como Português e Matemática, isso indica que os alunos estão se beneficiando das ações pedagógicas da ONG. Se não houver evolução, pode ser necessário ajustar os métodos de ensino ou aumentar a carga horária de reforço.""")
+    st.write("""Evolução das notas médias dos alunos ao longo das diferentes fases, distribuídas entre as disciplinas de Português, Matemática e Inglês.""")
+    st.write("- Um crescimento nas notas ao longo das fases indica que os alunos estão progredindo e se beneficiando das estratégias educacionais empregadas.")
+    st.write("- Caso as notas permanecem estagnadas ou apresentadas, pode ser necessário revisar os métodos de ensino ou estimular a carga horária das disciplinas com menor evolução.")
+    st.write("- Comparar o desempenho entre disciplinas também pode revelar quais áreas exigem maior atenção.")
     st.write("")
+    
+    
+    
+    
     st.subheader("📊 Mapa de Calor: Correlação entre Indicadores")
     fig_heatmap = plot_heatmap(df, ['nota_port','nota_mat','nota_ing','indicador_de_aprendizagem.1','indice_desenvolvimento_educacional','indicador_de_aprendizagem.1','indicador_de_auto_avaliacao', 'indicador_de_engajamento.1', 'indicador_psicopedagogico'], "Correlação entre Notas e Indicadores")
     st.plotly_chart(fig_heatmap)
 
-    st.write("""O mapa de calor pode revelar quais fatores estão mais intimamente ligados ao desempenho acadêmico. Se o "Índice de Desenvolvimento Educacional" tiver uma correlação forte com as notas, é um bom indicativo de que esse indicador é eficaz para medir o progresso educacional dos alunos.""")
+    st.write("""Correlação entre diferentes indicadores educacionais e as notas dos alunos em diversas disciplinas. Cada célula representa a força da relação entre dois fatores, onde tons mais claros indicam correlações mais fortes e tons mais escuros representam correlações mais fracas.""")
+    st.write("- Se indicadores como Engajamento, Autoavaliação e Índice de Desenvolvimento Educacional apresentarem uma correlação alta com as notas, isso sugere que eles podem ser fatores relevantes para o progresso educacional.")
+    st.write("- A análise desses padrões permite identificar quais aspectos do processo de aprendizagem exercem maior influência no desempenho dos alunos, auxiliando na definição de estratégias pedagógicas mais eficazes.")
     st.write("")
+    
+    
     # 5. Análise de Defasagem Escolar
     st.subheader("📊 Defasagem Escolar por Fase")
     fig_bar_defasagem = plot_bar(df, "fase", "Numero de Alunos por Fase", "Fase")
     st.plotly_chart(fig_bar_defasagem)
 
-    st.write("""A análise da defasagem escolar pode revelar em que fases os alunos estão mais atrasados. Por exemplo, se a defasagem for maior nas fases iniciais, isso sugere que o apoio deve ser direcionado especialmente para as crianças mais novas. Se a defasagem for maior nas fases mais avançadas, pode ser um indicativo de que os alunos estão tendo dificuldades para acompanhar o ritmo, o que exigiria intervenções urgentes.""")
+    st.write("""Quantidade de alunos em cada fase da defasagem escolar, destacando em quais etapas há maior concentração de estudantes.""")
+    st.write("- As fases iniciais (0, 1 e 2) possuem o maior número de alunos. A quantidade de alunos diminui conforme a fase avança, mas a análise dos dados revela padrões importantes.")
+    st.write("- Se a defasagem for mais intensa nas fases avançadas, isso pode indicar a necessidade de intervenções específicas para apoiar esses alunos.")
+    st.write("- A análise desses dados permite direcionar melhores estratégias educacionais para reduzir a defasagem e melhorar o aprendizado dos alunos ao longo do tempo.")
     st.write("")
+    
+    
     fig_scatter_defasagem = plot_scatter(df, "defasagem", "indice_desenvolvimento_educacional", "Defasagem vs INDE", "Defasagem (anos)", "INDE")
     st.plotly_chart(fig_scatter_defasagem)
 
-    st.write("""Este gráfico pode indicar se a defasagem escolar está relacionada diretamente ao desempenho educacional. Se houver uma correlação negativa, ou seja, os alunos com maior defasagem têm um INDE menor, a ONG deve considerar ações focadas para reduzir essa defasagem e ajudar os alunos a alcançar seu potencial máximo.""")
+    st.write("""Relação entre a defasagem escolar (anos de atraso) e o Índice de Desenvolvimento Educacional (INDE).""")
+    st.write("- Se houver uma correlação negativa, isso pode indicar que a defasagem escolar impacta negativamente o desempenho dos alunos.")
+    st.write("- Se a correlação for fraca ou inexistente, outras ações estratégicas podem ser necessárias para abordar as questões que afetam o aprendizado de forma mais eficaz.")
+    st.write("- Essa análise é essencial para que a ONG direcione esforços para minimizar os impactos da defasagem escolar e garantir melhores oportunidades para os alunos.")
     st.write("")
+    
+    
     # 6. Análise por Faixa Etária
     st.subheader("📊 Distribuição dos Alunos por Faixa Etária")
     # Criando a coluna 'faixa_etaria' antes do gráfico
@@ -192,15 +179,23 @@ Isso pode indicar que os alunos sob a supervisão desses avaliadores tiveram mel
     fig_bar_idade = plot_bar(df, "faixa_etaria", "Distribuição dos Alunos por Faixa Etária", "Faixa Etária")
     st.plotly_chart(fig_bar_idade)
 
-    st.write("""O gráfico de barras sobre a faixa etária pode mostrar como os alunos estão distribuídos em diferentes faixas etárias. Se houver uma concentração maior em faixas etárias mais velhas, pode ser um reflexo de um processo de recuperação de estudantes que estão mais atrasados.""")
+    st.write("""Distribuição dos alunos em diferentes faixas etárias. A maioria dos alunos se encontra na faixa etária de 13 a 18 anos, seguida pelos alunos com até 12 anos. Um número reduzido de alunos está na faixa de 19 a 25 anos, enquanto não há registros nas categorias acima de 25 anos.""")
+    st.write("- Se houvesse uma concentração significativa em faixas etárias mais altas, isso poderia indicar um processo de recuperação de alunos que enfrentaram dificuldades ao longo da jornada educacional.")
     st.write("")
+    
+    
+    
     st.subheader("📊 Relação entre Idade e INDE")
     fig_scatter_idade = plot_scatter(df, "idade_aluno", "indice_desenvolvimento_educacional", "Idade vs INDE", "Idade", "INDE")
 
     st.plotly_chart(fig_scatter_idade)
 
-    st.write("""Se não houver correlação entre idade e INDE, pode sugerir que o desempenho educacional não está diretamente ligado à faixa etária, o que reforça a ideia de que intervenções devem ser personalizadas conforme as necessidades de cada aluno e não apenas pela idade.""")
+    st.write("""Relação entre a idade dos alunos e o INDE, um indicador de desempenho educacional. Caso não haja uma correlação clara entre esses dois fatores, isso sugere que o desempenho acadêmico não está diretamente ligado à idade, reforçando a importância de estratégias educacionais personalizadas.""")
+    st.write("- Essa análise destaca que intervenções e suporte devem ser ajustados às necessidades individuais de cada aluno, em vez de serem definidos apenas pela faixa etária.")
     st.write("")
+    
+    
+    
     # 7. Classificação das Pedras com Base no INDE
     st.subheader("📊 Classificação de Pedras com Base no INDE")
     
@@ -240,8 +235,11 @@ Isso pode indicar que os alunos sob a supervisão desses avaliadores tiveram mel
 
     st.plotly_chart(fig_pedras)
 
-    st.write("""O gráfico de classificação das pedras usando o INDE oferece uma maneira intuitiva de visualizar os diferentes níveis de desempenho dos alunos. Se uma grande parte dos alunos for classificada como "Ametista" ou "Topázio", isso sugere que muitos alunos estão alcançando um bom desempenho educacional, o que é positivo. Caso contrário, um número elevado de alunos classificados como "Quartzo" ou "Ágata" pode indicar a necessidade de mais intervenções para melhorar o desempenho acadêmico, especialmente nas fases iniciais.""")
+    st.write("""Distribuição dos alunos de acordo com a classificação do INDE, permitindo uma análise do desempenho acadêmico ao longo dos anos. As categorias "Ametista" e "Topázio" indicam um bom desempenho educacional, enquanto "Quartzo" e "Ágata" podem sinalizar a necessidade de maior suporte.""")
+    st.write("- Se a maioria dos alunos estiverem nas categorias superiores, isso sugere uma evolução positiva no aprendizado. No entanto, um número elevado de alunos em "Quartzo" ou "Ágata" reforça a importância de intervenções estratégicas para garantir um melhor progresso acadêmico, especialmente nas fases iniciais da jornada educacional.")
     st.write("")
+    
+    
 # 💼 Página 4 - Perfil Socioeconômico
 elif pagina == "Perfil Socioeconômico":
     st.title("💼 Perfil Socioeconômico dos Alunos")
