@@ -129,8 +129,9 @@ def plot_radar(df, categories, values, titulo):
 
 # Função para gráfico de heatmap
 def plot_heatmap(df, cols, titulo):
+    df = df.apply(pd.to_numeric, errors='coerce')
     corr = df[cols].corr()
-    fig = go.Figure(go.Heatmap(z=corr.values, x=corr.columns, y=corr.columns, colorscale="Viridis"))
+    fig = go.Figure(go.Heatmap(z=corr.values, x=corr.columns, y=corr.columns, colorscale='Hot'))
     fig.update_layout(
         title=titulo,
         xaxis_title='Variáveis',
@@ -302,4 +303,47 @@ def plot_hist(df, col1, col2):
 
     # The two histograms are drawn on top of another
     fig.update_layout(barmode='stack')
+    return fig
+
+def plot_grouped_bar(df, phase_col, subject_cols, subject_names=None, title="Média das Notas por Disciplina e Fase"):
+    """
+    Plots a grouped bar chart showing the mean grades of different subjects per phase.
+
+    Parameters:
+    - df: DataFrame containing the data.
+    - phase_col: Column name representing the phase of the student.
+    - subject_cols: List of column names representing the grades for different subjects.
+    - subject_names: Optional dictionary mapping original column names to desired labels.
+    - title: Title of the chart.
+
+    Returns:
+    - A Plotly figure.
+    """
+    # Calculate mean grades per phase
+    df_mean = df.groupby(phase_col)[subject_cols].mean().reset_index()
+
+    # Melt dataframe to long format
+    df_long = df_mean.melt(id_vars=[phase_col], var_name="Disciplina", value_name="Nota Média")
+
+    # Rename subjects if a mapping is provided
+    if subject_names:
+        df_long["Disciplina"] = df_long["Disciplina"].replace(subject_names)
+
+    # Plot grouped bar chart
+    fig = px.bar(
+        df_long,
+        x=phase_col,
+        y="Nota Média",
+        color="Disciplina",
+        barmode="group",
+        title=title
+    )
+
+    # Update layout
+    fig.update_layout(
+        xaxis_title="Fase",
+        yaxis_title="Nota Média",
+        legend_title="Disciplina"
+    )
+
     return fig

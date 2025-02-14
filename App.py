@@ -6,10 +6,16 @@ import numpy as np
 from utils import *
 #import matplotlib.pyplot as plt
 
-# Carregar o dataset
-df = pd.read_csv("dados_tratados.csv")
 
 st.set_page_config(layout="wide")
+
+# Carregar o dataset
+@st.cache_data
+def carregar_dados():
+    return pd.read_csv("dados_tratados.csv")
+
+df = carregar_dados()
+
 # Barra Lateral para Navegação
 
 st.sidebar.title("📌 Navegação")
@@ -137,14 +143,20 @@ Isso pode indicar que os alunos sob a supervisão desses avaliadores tiveram mel
     
     
     # 4. Evolução do Desempenho dos Alunos
-    st.subheader("📊 Evolução das Notas dos Alunos em Português, Matemática e Ingresso")
-    fig_line_notas = plot_line(df, "ano", "nota_port", "Evolução das Notas de Português", "Ano", "Nota")
+    st.subheader("📊 Evolução das Notas dos Alunos em Português, Matemática e Inglês")
+    subject_names = {
+    "nota_port": "Português",
+    "nota_mat": "Matemática",
+    "nota_ing": "Inglês"
+    }
+    
+    fig_line_notas = plot_grouped_bar(df, "fase", ["nota_port", "nota_mat", "nota_ing"], subject_names)
     st.plotly_chart(fig_line_notas)
 
     st.write("""Se as notas estão crescendo ao longo do tempo em matérias chave como Português e Matemática, isso indica que os alunos estão se beneficiando das ações pedagógicas da ONG. Se não houver evolução, pode ser necessário ajustar os métodos de ensino ou aumentar a carga horária de reforço.""")
     st.write("")
     st.subheader("📊 Mapa de Calor: Correlação entre Indicadores")
-    fig_heatmap = plot_heatmap(df, ['nota_port', 'nota_mat', 'indice_desenvolvimento_educacional'], "Correlação entre Notas e Indicadores")
+    fig_heatmap = plot_heatmap(df, ['nota_port','nota_mat','nota_ing','indicador_de_aprendizagem.1','indice_desenvolvimento_educacional','indicador_de_aprendizagem.1','indicador_de_auto_avaliacao', 'indicador_de_engajamento.1', 'indicador_psicopedagogico'], "Correlação entre Notas e Indicadores")
     st.plotly_chart(fig_heatmap)
 
     st.write("""O mapa de calor pode revelar quais fatores estão mais intimamente ligados ao desempenho acadêmico. Se o "Índice de Desenvolvimento Educacional" tiver uma correlação forte com as notas, é um bom indicativo de que esse indicador é eficaz para medir o progresso educacional dos alunos.""")
