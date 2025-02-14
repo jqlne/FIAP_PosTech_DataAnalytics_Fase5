@@ -236,7 +236,7 @@ elif pagina == "Desempenho Educacional":
     st.plotly_chart(fig_pedras)
 
     st.write("""Distribuição dos alunos de acordo com a classificação do INDE, permitindo uma análise do desempenho acadêmico ao longo dos anos. As categorias "Ametista" e "Topázio" indicam um bom desempenho educacional, enquanto "Quartzo" e "Ágata" podem sinalizar a necessidade de maior suporte.""")
-    st.write("- Se a maioria dos alunos estiverem nas categorias superiores, isso sugere uma evolução positiva no aprendizado. No entanto, um número elevado de alunos em "Quartzo" ou "Ágata" reforça a importância de intervenções estratégicas para garantir um melhor progresso acadêmico, especialmente nas fases iniciais da jornada educacional.")
+    st.write('- Se a maioria dos alunos estiverem nas categorias superiores, isso sugere uma evolução positiva no aprendizado. No entanto, um número elevado de alunos em "Quartzo" ou "Ágata" reforça a importância de intervenções estratégicas para garantir um melhor progresso acadêmico, especialmente nas fases iniciais da jornada educacional.')
     st.write("")
     
     
@@ -311,32 +311,48 @@ elif pagina == "Perfil Socioeconômico":
 elif pagina == "Conclusão e Recomendações":
     st.title("📌 Conclusões e Recomendações")
     st.write("""
-    Com base nas análises, concluímos que a ONG Passos Mágicos tem impacto positivo no aprendizado dos alunos. A análise dos dados de desempenho dos estudantes atendidos pela ONG "Passos Mágicos" revela um impacto positivo significativo das ações educacionais da organização. O aumento constante nas notas ao longo dos anos analisados, juntamente com a correlação positiva entre a participação nos programas de apoio e o desempenho acadêmico, indica que a ONG está alcançando seus objetivos de melhorar a educação de crianças e jovens em situação de vulnerabilidade social.
-É fundamental que a ONG continue a investir em programas educacionais que atendam às necessidades específicas de cada grupo etário, ampliando o acesso ao apoio pedagógico e criando estratégias para maximizar a participação dos alunos. A implementação dessas recomendações pode potencializar ainda mais os resultados e contribuir para um futuro mais promissor para os alunos atendidos.
+    A análise dos dados de desempenho dos estudantes atendidos pela *ONG Passos Mágicos* revela um impacto positivo significativo das ações educacionais promovidas. O aumento contínuo das notas ao longo dos anos analisados, bem como a forte correlação entre a participação nos programas de apoio e o desempenho acadêmico, indicam que a ONG tem sido eficaz em seu propósito de proporcionar educação de qualidade para crianças e jovens em situação de vulnerabilidade social.
     """)
+    st.write("""
+    Para potencializar esses resultados, é essencial que a ONG continue aprimorando seus programas pedagógicos, ampliando o acesso ao suporte educacional e desenvolvendo estratégias para aumentar a adesão dos alunos. A implementação das recomendações apresentadas contribuirá para a consolidação e expansão do impacto social da organização.
+    """)
+    
     st.write("")
-    st.header("1️⃣ Principais Achados")
-    st.subheader("📈 Melhoria Contínua do Desempenho Acadêmico")
-    st.write("- Notas médias aumentaram de 2020 a 2022.")
-    st.write("- **Pico de desempenho** em 2021, possivelmente pela ampliação dos programas de reforço.")
+    st.header("1. Principais Achados")
+    st.subheader("1.1 Melhoria Contínua no Desempenho Acadêmico")
+    st.write("- As notas médias apresentaram crescimento constante entre 2020 e 2022.")
+    st.write("- O maior avanço foi registrado em Português, com um crescimento expressivo, enquanto Matemática teve um progresso mais moderado.")
+    st.write("- Em 2021, houve um salto significativo no desempenho geral, possivelmente devido à ampliação dos programas de reforço escolar.")
     
-    st.subheader("🎯 Impacto Direto da Participação nos Programas de Apoio")
-    st.write("- Alunos que participaram dos programas tiveram **25% de melhoria** no desempenho acadêmico.")
-    st.write("- **Correlação positiva (r = 0.75)** entre frequência nos programas e aumento das notas.")
+    st.subheader("1.2 Distribuição de Desempenho")
+    st.write("- Redução do número de alunos com desempenho abaixo da média (INDE < 5).")
+    st.write("- Aumento da proporção de estudantes com desempenho elevado (INDE ≥ 7).")
 
-    st.header("2️⃣ Recomendações Estratégicas")
-    st.write("- Criar um **sistema de acompanhamento** contínuo para ajustar estratégias conforme necessário.")
-    st.write("- Estabelecer **parcerias com empresas e universidades** para expandir as ações.")
+    st.subheader("1.3 Impacto dos Programas de Apoio")
+    st.write("- Alunos que participaram ativamente dos programas pedagógicos apresentaram, em média, 25% de melhora em seu desempenho acadêmico.")
+    st.write("- Identificou-se uma correlação positiva (r = 0.75) entre a frequência nos programas e o aumento das notas, reforçando a eficácia das iniciativas da ONG.")
+    st.write("- Quanto maior a participação nos programas de reforço, maior a probabilidade de o aluno alcançar desempenho excelente.")
+
+    st.subheader("1.4 Fatores que Influenciam o Sucesso")
+    st.write("- *Bolsistas vs. Não bolsistas*: Alunos beneficiados por bolsas de estudo tiveram desempenho superior, evidenciando a relevância do apoio financeiro.")
+    st.write("- *Acesso à tecnologia*: O desempenho foi melhor entre alunos com acesso a dispositivos digitais (tablets ou computadores), especialmente durante o ensino remoto.")
+
+    st.header("2. Desafios Identificados")
+    st.write("- *Matemática apresenta crescimento inferior*: O avanço na disciplina foi menor em comparação a Português, indicando necessidade de metodologias mais eficazes e maior suporte didático.")
+    st.write("- *Baixa adesão de crianças mais novas (6 a 10 anos)*: Essa faixa etária apresentou menor participação nos programas educacionais, possivelmente devido à falta de recursos digitais em casa.")
     
-    st.header("3️⃣ Conclusão Geral")
-    st.write("✅ A ONG tem um impacto comprovado no aprendizado dos alunos.")
-    st.write("✅ Os programas de reforço devem ser **expandidos** para aumentar a adesão.")
-    st.write("✅ Monitoramento contínuo e captação de recursos são essenciais para crescimento.")
+    st.header("3. Recomendações Estratégicas")
+    st.write("Desenvolver um sistema de monitoramento contínuo para acompanhar o progresso dos alunos e permitir ajustes mais ágeis nas estratégias pedagógicas.")
+    st.write("Fortalecer parcerias com empresas e universidades para ampliar o suporte educacional, oferecer oportunidades de estágio e reforçar a captação de recursos.")
+    st.write("Expandir os programas de reforço escolar, priorizando alunos com dificuldades acadêmicas e incentivando maior adesão.")
+    st.write("Aprimorar metodologias para o ensino de Matemática, incorporando abordagens inovadoras e personalizadas para melhorar o desempenho nessa disciplina.")
+    st.write("Ampliar o acesso a recursos tecnológicos, garantindo que mais alunos possam usufruir de ferramentas digitais para apoio ao aprendizado.")
     
-    st.subheader("🔮 Próximos Passos")
-    st.write("1. Aumentar a participação nos programas de apoio.")
-    st.write("2. Personalizar métodos de ensino para alunos mais novos.")
-    st.write("3. Criar um **modelo de análise contínua** dos dados.")
-    st.write("4. Estabelecer **novas parcerias** para sustentabilidade do projeto.")
+    st.header("4. Próximos Passos")
+    st.write("- Aumentar a participação nos programas de apoio pedagógico, promovendo ações para estimular o engajamento dos alunos.")
+    st.write("- Personalizar as estratégias de ensino, adaptando-as de acordo com as necessidades específicas de cada grupo etário.")
+    st.write("- Implementar um modelo contínuo de análise de dados, permitindo que a ONG ajuste suas estratégias com base em métricas de impacto real.")
+    st.write("- Expandir parcerias institucionais, buscando o apoio de universidades, empresas e organizações do setor educacional para ampliar o alcance e os recursos disponíveis.")
     
-    st.success("📢 **Conclusão Final:** A 'Passos Mágicos' impacta positivamente seus alunos. Com as recomendações, pode ampliar ainda mais seu alcance e transformar vidas através da educação. 🚀")
+    st.header("5. Conclusão Final")
+    st.write("Os dados analisados confirmam que a ONG Passos Mágicos tem um impacto significativo e positivo no desempenho acadêmico dos alunos atendidos. A expansão dos programas de reforço, o aprimoramento das metodologias pedagógicas e o fortalecimento de parcerias estratégicas são ações fundamentais para amplificar esses resultados. Com a implementação das recomendações propostas, a ONG poderá não apenas consolidar seu impacto, mas também expandir suas iniciativas e transformar ainda mais vidas por meio da educação.")
