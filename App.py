@@ -250,8 +250,11 @@ elif pagina == "Perfil Socioeconômico":
 #plot_bar(df, "bolsista", "Classificação Geral - Bolsistas vs Não Bolsistas", "Bolsista")
     st.plotly_chart(fig_bar_bolsista)
 
-    st.write("""A comparação entre bolsistas e não bolsistas pode revelar um impacto positivo do apoio financeiro no desempenho educacional. Se os bolsistas tiverem um desempenho superior, isso sugere que a oferta de bolsas tem um papel importante no sucesso acadêmico dos alunos. Este dado pode apoiar a continuidade e expansão de programas de bolsas, que ajudam a reduzir desigualdades e melhorar os resultados educacionais.""")
+    st.write("""Desempenho acadêmico entre estudantes bolsistas e não bolsistas, evidenciando a influência do apoio financeiro na educação. Observa-se uma discrepância significativa no número de estudantes em cada categoria, o que pode indicar barreiras no acesso ao ensino para aqueles sem bolsa.""")
+    st.write("- Se os bolsistas apresentarem melhor desempenho, isso reforça a importância dos programas de apoio financeiro para reduzir desigualdades educacionais e promover inclusão. Esses dados são fundamentais para embasar a expansão de políticas públicas e iniciativas de ONGs que buscam garantir oportunidades iguais para todos os estudantes.")
     st.write("")
+    
+    
     st.subheader("📊 Bolsistas vs Não Bolsistas nas Notas")
     
     
@@ -287,8 +290,11 @@ elif pagina == "Perfil Socioeconômico":
 
     
 
-    st.write("""A análise das notas de alunos bolsistas versus não bolsistas mostra de forma mais clara o efeito do suporte financeiro no desempenho escolar. Se os bolsistas tiverem melhores notas, isso reforça a importância de garantir que todos os alunos com potencial recebam o apoio necessário para um bom desempenho acadêmico.""")
+    st.write("""Distribuição percentual das notas de alunos bolsistas e não bolsistas, permitindo uma análise comparativa do desempenho acadêmico entre os dois grupos. A visualização sugere que os bolsistas tendem a apresentar um maior percentual de notas elevadas, o que pode indicar o impacto positivo do suporte financeiro na trajetória educacional.""")
+    st.write("- Os dados reforçam a importância de programas de bolsas para garantir que alunos em situação de vulnerabilidade tenham condições adequadas para alcançar seu potencial acadêmico. Essa análise pode subsidiar políticas educacionais e iniciativas de ONGs voltadas à redução das desigualdades no acesso e permanência na educação.")
     st.write("")
+    
+    
     # 8. Impacto da Integração com os Princípios Passos Mágicos
     st.subheader("📊 Integração com os Princípios Passos Mágicos")
     indicadores = ['indicador_de_engajamento.1', 'indicador_de_aprendizagem.1', 'indicador_de_ponto_de_virada.1']
@@ -296,8 +302,11 @@ elif pagina == "Perfil Socioeconômico":
     fig_bar_integracao = plot_boxplot_por_ano(df, indicadores,box_gap=0.1)# "Integração com os Princípios Passos Mágicos", "Integração")
     st.plotly_chart(fig_bar_integracao)
 
-    st.write("""Este gráfico examina como os alunos estão se integrando aos princípios e valores da ONG Passos Mágicos e o impacto dessa integração no desempenho. Se alunos com maior integração obtiverem melhores resultados acadêmicos, isso indica que os princípios da ONG têm um efeito positivo no desenvolvimento educacional e no engajamento dos alunos, reforçando a necessidade de continuar promovendo essas práticas.""")
+    st.write("""Integração dos alunos aos princípios e valores da ONG Passos Mágicos ao longo dos anos e seu impacto no desempenho educacional. A distribuição dos indicadores de engajamento, aprendizagem e momentos de virada acadêmica sugere que um maior alinhamento com os princípios da ONG pode estar relacionado a melhores resultados.""")
+    st.write("- A evolução desses indicadores ao longo dos anos reforça a importância de continuar promovendo práticas que incentivem o engajamento e o desenvolvimento educacional dos alunos. Esses dados podem apoiar a tomada de decisões sobre estratégias para fortalecer ainda mais a conexão entre os estudantes e os valores da ONG.")
     st.write("")
+    
+    
 # 📌 Página 5 - Conclusão e Recomendações
 elif pagina == "Conclusão e Recomendações":
     st.title("📌 Conclusões e Recomendações")
