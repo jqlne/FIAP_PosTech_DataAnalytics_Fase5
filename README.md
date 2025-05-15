@@ -1,1 +1,1 @@
-https://github.com/jqlne/FIAP_PosTech_DataAnalytics_Fase5
+https://fiappostechdataanalyticsfase5-grupo52.streamlit.app/
